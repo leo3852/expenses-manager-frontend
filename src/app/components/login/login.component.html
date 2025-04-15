@@ -1,0 +1,54 @@
+<div class="flex justify-center items-center h-full w-65">
+    <div class="bg-white/50 p-8 rounded-md shadow-md w-full max-w-sm">
+      <h2 class="text-2xl text-center mb-6">Login</h2>
+  
+      <form (ngSubmit)="login()" #loginForm="ngForm" class="">
+        <div>
+          <!-- <label for="email" class="block text-sm font-medium text-gray-700">Email</label> -->
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="loginData.email"
+            required
+            class="w-48 bg-white invalid:border-pink-500 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter your email"
+          />
+        </div>
+  
+        <div class="mt-2">
+          <!-- <label for="password" class="block text-sm font-medium text-gray-700">Password</label> -->
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="loginData.password"
+            required
+            class="w-48 bg-white invalid:border-pink-500 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter your password"
+          />
+        </div>
+        <button
+        type="submit"
+        class="w-48 invalid:bg-red-200 rounded-full bg-sky-500 mt-2 px-5 py-2 text-sm leading-5 font-semibold text-white hover:bg-sky-700 cursor-pointer"
+        >
+            <!-- [disabled]="!loginForm.valid" -->
+            Login
+        </button>
+        <span  *ngIf="!loginValidOrFirst"  class="relative inline-flex">
+            <div class="mt-5">
+                <p class="text-red-700 bold" >Invalid credentials</p>
+            </div>
+            <span class="absolute top-6 -right-3 -mt-1 -mr-1 flex size-3">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-200 opacity-75"></span>
+                <span class="relative inline-flex size-2 rounded-full bg-red-300"></span>
+            </span>
+        </span>
+        <p class="text-center text-sm text-gray-600 mt-4">
+            Don't have an account?
+            <a [routerLink]="['/auth/register']" (click)="changeToRegister.emit(); $event.preventDefault();" class="text-blue-500 hover:text-blue-600">Register</a>
+        </p>
+      </form>
+    </div>
+  </div>
+  

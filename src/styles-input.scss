@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+/* Define transition for smooth fading */
+.fade-in {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms ease-in, visibility 0ms ease-in 300ms;
+  }
+  
+  .fade-in.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 300ms ease-in, visibility 0ms ease-in 0ms;
+  }
+  
+  .fade-out {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 300ms ease-out, visibility 0ms ease-out 300ms;
+  }
+  
+  .fade-out.hide {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms ease-out, visibility 0ms ease-out 0ms;
+  }

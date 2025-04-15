@@ -1,0 +1,43 @@
+<section class="w-11/12 md:w-4/5 mx-auto px-4 mt-10 border-b-2 pb-8 border-gray-300 mb-6">
+    <h2 class="text-left mb-5 text-xl md:text-2xl font-semibold text-gray-900">Summary for {{ currentMonthLabel }}</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+        <!-- Spending Card -->
+        <div class="bg-white/50 flex items-center shadow-md rounded-full pl-5 mr-16 md:mr-0 md:p-4 md:pl-8 border-t-4 border-red-500">
+            <i class="fas fa-arrow-up text-red-600 text-3xl mr-4"></i> 
+            <div class="text-left">
+                <h3 class="text-lg font-medium text-red-600 mb-2">Spending</h3>
+                <p class="text-2xl md:text-3xl font-bold text-gray-800">{{ userCurrencySymbol?.toString() + " " + 
+                (userCurrencySymbol == 'Rp' ||  userCurrencySymbol == '$U' ? spendingTotal.toFixed(0) : spendingTotal.toFixed(2)) }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Income Card -->
+        <div class="bg-white/50 flex items-center shadow-md rounded-full pl-5 mr-16 md:mr-0 md:p-4 md:pl-8 border-t-4 border-green-500">
+            <i class="fas fa-arrow-down text-green-600 text-3xl mr-4"></i> 
+            <div class="text-left">
+                <h3 class="text-lg font-medium text-green-600 mb-2">Income</h3>
+                <p class="text-2xl md:text-3xl font-bold text-gray-800">
+                    {{userCurrencySymbol?.toString() + " " + 
+                    ( userCurrencySymbol == 'Rp' ||  userCurrencySymbol == '$U' ?  incomeTotal.toFixed(0) : incomeTotal.toFixed(2)) }}
+
+                </p>
+            </div>
+        </div>
+        <!-- Balance  -->
+        <div class="bg-white/50 flex items-center shadow-md rounded-full pl-5 mr-16 md:mr-0 md:p-4 md:pl-8">
+            <i class="far fa-money-bill-alt text-gray-600 text-2xl mr-4"></i> 
+            <div class="text-left">
+                <h3 class="font-medium text-gray-600 mb-2">Balance</h3>
+                <p class="text-xl md:text-2xl font-bold text-gray-800">{{userCurrencySymbol?.toString() + " " + ( userCurrencySymbol == 'Rp' ||  userCurrencySymbol == '$U' ? (incomeTotal - spendingTotal).toFixed(0) : (incomeTotal - spendingTotal).toFixed(2)) }}</p>
+            </div>
+        </div>
+        <!-- NEW TRAN  -->
+        <div class="flex flex-row-reverse items-center h-20 md:h-auto">
+            <div class="bg-sky-500 absolute shadow-md rounded-full p-6 px-7 cursor-pointer" routerLink="add">
+                <i class="text-3xl fa-solid fa-plus text-white"></i>
+            </div>
+        </div>
+    </div>
+</section>
