@@ -48,21 +48,18 @@ export class AddTransactionComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    // Set userId dynamically from localStorage (if available)
     const userId = localStorage.getItem('userId');
     this.userCurrencySymbol = localStorage.getItem('userCurrencySymbol');
     this.userCurrencyName = localStorage.getItem('userCurrencyName');
     if (userId) {
       this.transactionForm.patchValue({ userId: parseInt(userId, 10) });
     }
-    // Fetch categories from your CategoriesService
     this.categoriesService.getCategories().subscribe({
       next: (categories: CategoryDto[]) => {
         this.categories = categories;
       },
       error: (err) => {
         console.error('Error fetching categories:', err);
-        // Optional: Show a user-friendly message
       }
     });
   }
