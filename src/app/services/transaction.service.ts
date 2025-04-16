@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { TransactionDto } from '../models/transaction.dto';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class TransactionService {
-  private apiUrl = 'http://localhost:5050/api/transactions';  // API URL
+  private apiUrl = environment.apiUrl + '/transactions';
   private transactionsSubject = new BehaviorSubject<TransactionDto[]>([]);
   transactions$ = this.transactionsSubject.asObservable();
   
