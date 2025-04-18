@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { CategoryDto } from '../models/category.dto';
 import { environment } from '../../environments/environment';
 
@@ -10,6 +10,8 @@ import { environment } from '../../environments/environment';
 
 export class CategoriesService {
   private apiUrl = environment.apiUrl + '/categories';
+  private categoriesSubject = new BehaviorSubject<CategoryDto[]>([]);
+  categories$ = this.categoriesSubject.asObservable();
   
   constructor(private http: HttpClient) {}
 
@@ -24,9 +26,23 @@ export class CategoriesService {
     });
   }
 
+  updateCategories(categories: CategoryDto[]) {
+    this.categoriesSubject.next(categories);
+  }
+
+  getCurrentCategories(): CategoryDto[] {
+    return this.categoriesSubject.getValue();
+  }
+
   getCategories(): Observable<CategoryDto[]> {
-    return this.http.get<CategoryDto[]>(this.apiUrl, {
-      headers: this.getAuthHeaders()
-    });
+    if (this.getCurrentCategories().length === 0) {
+      return this.http.get<CategoryDto[]>(this.apiUrl, {
+        headers: this.getAuthHeaders()
+      }).pipe(
+        tap(data => this.updateCategories(data)) // store the fetched data
+      );
+    } else {
+      return of(this.getCurrentCategories()); // wrap array in observable
+    }
   }
 }

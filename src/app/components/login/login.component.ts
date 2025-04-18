@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service'; // Your AuthService t
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoginDto } from '../../models/login.dto';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,7 @@ export class LoginComponent {
 
   @Output() changeToRegister = new EventEmitter<void>();
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private transactionService: TransactionService, private authService: AuthService, private router: Router) {}
 
   login() {
     let email = this.loginData.email;
@@ -49,6 +50,7 @@ export class LoginComponent {
             }
             this.loginValidOrFirst = true;
             //this.onLogin.emit(this.loginValidOrFirst); // Pass true when login is successful
+            this.transactionService.clearTransactions(); // clear transactions
             this.router.navigate(['/dashboard']);
           } else {  
             alert('Invalid credentials');
