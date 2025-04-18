@@ -45,6 +45,10 @@ export class TransactionService {
       return of(this.getCurrentTransactions()); // wrap array in observable
     }
   }
+
+  clearTransactions() {
+    this.transactionsSubject.next([]); // reset the observable
+  }
   
   addTransaction(transaction: TransactionDto): Observable<TransactionDto> {
     const payload = { ...transaction }; // making a copy

@@ -21,6 +21,7 @@ export class TransactionListComponent implements OnInit {
       private categoriesService: CategoriesService) {}
 
   ngOnInit(): void {
+    this.transactionService.clearTransactions();
     this.userCurrencySymbol = localStorage.getItem('userCurrencySymbol');
     this.categoriesService.getCategories().subscribe({
       next: (categories: CategoryDto[]) => {
