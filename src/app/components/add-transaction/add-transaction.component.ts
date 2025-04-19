@@ -19,6 +19,7 @@ import { NgFor, NgIf, CommonModule } from '@angular/common';
   styleUrls: ['./add-transaction.component.scss'],
 })
 export class AddTransactionComponent implements OnInit {
+  isLoading:boolean = false; 
   categories: CategoryDto[] = []; 
   userCurrencySymbol: string | null= '';
   userCurrencyName: string | null= '';
@@ -90,6 +91,7 @@ export class AddTransactionComponent implements OnInit {
 
   onSubmit(): void {
     if (this.transactionForm.valid) {
+      this.isLoading = true; // Show spinner
       const formValue = this.transactionForm.getRawValue();
 
       const transaction: TransactionDto = {
@@ -100,11 +102,13 @@ export class AddTransactionComponent implements OnInit {
   
       this.transactionService.addTransaction(transaction).subscribe({
         next: (addedTransaction: TransactionDto) => {
+          this.isLoading = false; // hide spinner
           this.transactionForm.reset();
           // Re-set default date after reset (optional)
           this.transactionForm.patchValue({ date: this.formatDateToString(new Date()) });
         },
         error: (err) => {
+          this.isLoading = false; // hide spinner
           console.error('Error adding transaction', err);
         }
       });

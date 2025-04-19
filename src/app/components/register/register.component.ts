@@ -26,7 +26,7 @@ export class RegisterComponent {
 
   registrationFailed = false;
   passwordError = '';
-
+  isLoading: boolean = false;
   @Output() changeToLogin = new EventEmitter<void>();
   
   constructor(private snackBar: MatSnackBar, private authService: AuthService, private router: Router) {}
@@ -72,6 +72,7 @@ export class RegisterComponent {
 
   register() {
     if (this.validatePassword()) {
+      this.isLoading = true; // show spinner
       const dto: RegisterDto = {
         name: this.registerData.name,
         email: this.registerData.email,
@@ -80,6 +81,7 @@ export class RegisterComponent {
       };
       this.authService.register(dto).subscribe({
         next: (response: UserDto) => {
+          this.isLoading = false; // hide spinner
           this.snackBar.open('Registration Successful, Welcome!', 'Close', {
             duration: 3000,
             horizontalPosition: 'center',
@@ -117,6 +119,7 @@ export class RegisterComponent {
           })
         },
         error: (error: HttpErrorResponse) => {
+          this.isLoading = false; // hide spinner
           //console.error('Registration failed:', error);
           this.snackBar.open(error.error, 'Close', {
             duration: 3000,

@@ -64,7 +64,7 @@
           </select>
         </div>
   
-        <div *ngIf="passwordError" class="text-sm text-red-600 mt-1">
+        <div *ngIf="passwordError" class="text-sm text-red-300 mt-2">
           <p class="text-ellipsis">{{ passwordError }}</p>
         </div>
   
@@ -74,7 +74,10 @@
         >
           Register
         </button>
-  
+        <div *ngIf="isLoading" class="spinner text-white mt-5">
+          <!-- basic spinner style, can be improved -->
+          <p>Loading...</p>
+        </div>
         <p class="text-center text-sm text-white mt-4">
           Already have an account?
           <a [routerLink]="['/auth/login']" (click)="changeToLogin.emit(); $event.preventDefault();"  class="text-blue-500 hover:text-blue-600">Login</a>

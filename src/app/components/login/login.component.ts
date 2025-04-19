@@ -22,16 +22,19 @@ export class LoginComponent {
   loginValidOrFirst = true;
 
   @Output() changeToRegister = new EventEmitter<void>();
+  isLoading: boolean = false;
 
   constructor(private transactionService: TransactionService, private authService: AuthService, private router: Router) {}
 
   login() {
     let email = this.loginData.email;
     let password = this.loginData.password;
+    this.isLoading = true; // Show spinner
 
     if (email && password) {
       this.authService.login({ email, password }).subscribe({
         next: (value: LoginDto) => {
+          this.isLoading = false; // Hide spinner
           if (value.token) {
             const userId = value?.userDto?.id;
             const userName = value?.userDto?.name;
@@ -59,6 +62,7 @@ export class LoginComponent {
           
         },
         error: err =>{ 
+          this.isLoading = false; // Hide spinner
           this.loginValidOrFirst = false;
           //console.error('Observable emitted an error: ' + err);
         }

@@ -87,7 +87,7 @@
        type="date" formControlName="date" 
        required 
      />
-     
+
       <!-- Submit Button -->
       <button 
         type="submit" 
@@ -96,6 +96,10 @@
       >
         Add Transaction
       </button>
+      <div *ngIf="isLoading" class="spinner text-white mt-5">
+        <!-- basic spinner style, can be improved -->
+        <p>Loading...</p>
+      </div>
     </form>
   </div>
 </div>
