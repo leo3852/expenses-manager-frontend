@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center mt-5 overflow-x-auto w-full">
-  <div class="grid justify-items-center bg-white/75 w-4/5 md:p-8 pt-5 rounded-md shadow-md">
+  <div class="grid justify-items-center  w-4/5 md:p-8 pt-5 rounded-md shadow-md">
     <div class="w-full flex justify-between pt-5 pb-8">
-      <p class="text-xl pl-5 md:pl-0">
+      <p class="text-xl pl-5 md:pl-0 text-white">
         Recent Added Transactions
       </p>
       
@@ -49,7 +49,7 @@
   
     <!-- MOBILE VERSION -->
     <div class="md:hidden space-y-4 px-4">
-      <div *ngFor="let transaction of transactions | slice:0:10" class="bg-white/20 p-4 rounded-md shadow-md">
+      <div *ngFor="let transaction of transactions | slice:0:5" class="bg-white   p-4 rounded-md shadow-md">
         <p class="text-sm"><span class="font-semibold">Amount:</span> {{ transaction?.amount | currency: userCurrencySymbol?.toString() + ' ' }}</p>
         <p class="text-sm"><span class="font-semibold">Category:</span> 
           <i [ngClass]="[
@@ -62,7 +62,7 @@
           <span [ngClass]="{
             'text-green-500': transaction?.type === 'Income',
             'text-red-500': transaction?.type === 'Expense'
-          }">{{ transaction?.type }}</span>
+          }"> {{ transaction?.type }}</span>
         </p>
         <p class="text-sm"><span class="font-semibold">Date:</span> {{ transaction?.date | date: 'dd/MM/yyyy' }}</p>
         <p class="text-sm"><span class="font-semibold">Description:</span> {{ transaction?.description }}</p>

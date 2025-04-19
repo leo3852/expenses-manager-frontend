@@ -1,13 +1,13 @@
 <div class="flex flex-col items-center mt-5 mb-10">
-    <div class="grid justify-items-center bg-white/75 backdrop-blur-md w-11/12 md:w-4/5 p-6 md:p-8 rounded-xl shadow-md">
+    <div class="grid justify-items-center  backdrop-blur-md w-11/12 md:w-4/5 p-6 md:p-8 rounded-xl shadow-md">
       
       <!-- Header Section -->
       <div class="w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6">
-        <h2 class="text-2xl font-semibold text-gray-900 ">Transactions</h2>
+        <h2 class="text-2xl font-semibold text-white">Transactions</h2>
         
         <!-- Filter Dropdown -->
         <div class="flex items-center gap-2 w-full md:w-auto">
-          <label class="text-sm font-medium text-gray-700 dark:text-gray-700">Filters:</label>
+          <label class="text-sm font-medium text-white ">Filters:</label>
           <select
             [(ngModel)]="selectedMonth"
             (change)="filterByMonth()"
@@ -36,7 +36,7 @@
       </div>
   
       <!-- No Transactions Message -->
-      <p *ngIf="!transactions.length" class="text-center text-gray-600 dark:text-gray-500">No transactions this month...</p>
+      <p *ngIf="!transactions.length" class="text-center text-white dark:text-gray-500">No transactions this month...</p>
   
       <!-- Table (Desktop) -->
       <div *ngIf="transactions.length"  class="overflow-x-auto w-full hidden md:block">
@@ -86,7 +86,7 @@
   
       <!-- Mobile View -->
       <div *ngIf="transactions.length"  class="md:hidden w-full space-y-4">
-        <div *ngFor="let transaction of transactions" class="bg-white/30 rounded-lg p-4 shadow-md">
+        <div *ngFor="let transaction of transactions" class="bg-white rounded-lg p-4 shadow-md">
             <p><span class="font-semibold">Amount:</span> {{ transaction?.amount | currency: userCurrencySymbol?.toString() + " "  }}</p>
             <p><span class="font-semibold">Category:</span> 
                 <i [ngClass]="[
