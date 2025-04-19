@@ -1,6 +1,6 @@
 <div class="flex justify-center items-center h-full w-65">
-    <div class="bg-sky-100 p-8 rounded-md shadow-md w-full max-w-sm">
-      <h2 class="text-2xl text-center mb-6">Login</h2>
+    <div class="bg-neutral-700 p-8 rounded-md shadow-md w-full max-w-sm">
+      <h2 class="text-2xl text-white text-center mb-6">Login</h2>
   
       <form (ngSubmit)="login()" #loginForm="ngForm" class="">
         <div>
@@ -11,7 +11,7 @@
             name="email"
             [(ngModel)]="loginData.email"
             required
-            class="w-48 bg-white invalid:border-pink-500 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            class="w-48 bg-neutral-700 text-white invalid:border-pink-500 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="Enter your email"
           />
         </div>
@@ -24,7 +24,7 @@
             name="password"
             [(ngModel)]="loginData.password"
             required
-            class="w-48 bg-white invalid:border-pink-500 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            class="w-48 bg-neutral-700 text-white invalid:border-pink-500 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="Enter your password"
           />
         </div>
@@ -44,7 +44,7 @@
                 <span class="relative inline-flex size-2 rounded-full bg-red-300"></span>
             </span>
         </span>
-        <p class="text-center text-sm text-gray-600 mt-4">
+        <p class="text-center text-sm text-white mt-4">
             Don't have an account?
             <a [routerLink]="['/auth/register']" (click)="changeToRegister.emit(); $event.preventDefault();" class="text-blue-500 hover:text-blue-600">Register</a>
         </p>
