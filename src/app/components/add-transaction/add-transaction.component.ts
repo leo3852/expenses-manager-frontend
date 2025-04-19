@@ -5,7 +5,7 @@ import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule, V
 import { TransactionDto } from '../../models/transaction.dto';
 import { CategoryDto } from '../../models/category.dto';
 import { CategoriesService } from '../../services/categories.service';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-transaction',
@@ -13,7 +13,8 @@ import { NgFor, NgIf } from '@angular/common';
   imports: [
     ReactiveFormsModule ,
     NgFor,
-    NgIf
+    NgIf,
+    CommonModule
   ],
   styleUrls: ['./add-transaction.component.scss'],
 })
@@ -28,7 +29,8 @@ export class AddTransactionComponent implements OnInit {
     categoryId: new FormControl<number>(1, { nonNullable: true, validators: [Validators.required] }),
     type: new FormControl<'Income' | 'Expense'>('Income', { nonNullable: true, validators: [Validators.required] }),
     description: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
-    date: new FormControl<Date>(new Date(), { nonNullable: true, validators: [Validators.required] })
+    date: new FormControl<string>(this.formatDateToString(new Date()), { nonNullable: true, validators: [Validators.required] })
+
   });
 
 
@@ -43,6 +45,12 @@ export class AddTransactionComponent implements OnInit {
     return control.value > 0 ? null : { notPositive: true };
   }
 
+
+  formatDateToString(date: Date): string {
+    return date.toISOString().split('T')[0]; // Returns 'YYYY-MM-DD'
+  }
+  
+  
   get amountControl() {
     return this.transactionForm.get('amount');
   }
@@ -64,12 +72,37 @@ export class AddTransactionComponent implements OnInit {
     });
   }
 
+  // onSubmit(): void {
+  //   if (this.transactionForm.valid) {
+  //     const transaction: TransactionDto = this.transactionForm.value as TransactionDto;
+  //     this.transactionService.addTransaction(transaction).subscribe({
+  //       next: (addedTransaction: TransactionDto) => {
+  //         this.transactionForm.reset();
+  //       },
+  //       error: (err) => {
+  //         console.error('Error adding transaction', err);
+  //       }
+  //     });
+  //   } else {
+  //     console.error('Please fill in all required fields.');
+  //   }
+  // }
+
   onSubmit(): void {
     if (this.transactionForm.valid) {
-      const transaction: TransactionDto = this.transactionForm.value as TransactionDto;
+      const formValue = this.transactionForm.getRawValue();
+
+      const transaction: TransactionDto = {
+        ...formValue,
+        id: formValue.id ?? undefined,
+        date: new Date(formValue.date as string) // Convert string to Date
+      };
+  
       this.transactionService.addTransaction(transaction).subscribe({
         next: (addedTransaction: TransactionDto) => {
           this.transactionForm.reset();
+          // Re-set default date after reset (optional)
+          this.transactionForm.patchValue({ date: this.formatDateToString(new Date()) });
         },
         error: (err) => {
           console.error('Error adding transaction', err);
@@ -79,6 +112,7 @@ export class AddTransactionComponent implements OnInit {
       console.error('Please fill in all required fields.');
     }
   }
+  
 
   // Getter for accessing form controls in template (for error handling)
   get f() {

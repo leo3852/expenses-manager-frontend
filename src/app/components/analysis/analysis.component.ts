@@ -88,13 +88,19 @@ export class AnalysisComponent {
         datasets: [{
           data,
           backgroundColor: this.backgroundColors.slice(0, data.length),
-          borderWidth: 1
+          borderWidth: 1,
         }]
       },
       options: {
         responsive: true,
         plugins: {
           legend: {
+            labels:{
+              color: '#ffffff',
+              font: {
+                size: 16 
+              }
+            },
             position: 'bottom'
           },
           tooltip: {
@@ -113,7 +119,7 @@ export class AnalysisComponent {
     this.config.data.labels = labels;
     this.config.data.datasets[0].data = data;
     this.config.data.datasets[0].backgroundColor = this.backgroundColors.slice(0, data.length);
-  
+    
     if (this.chart) {
       this.chart.destroy();
     }
@@ -205,7 +211,8 @@ export class AnalysisComponent {
           backgroundColor: 'rgba(239, 68, 68, 0.2)', // Light red background for expenses
           fill: false, // No fill for the cumulative line
           tension: 0.4, // Smooth curve
-          borderWidth: 2 // Thicker line for cumulative expenses
+          borderWidth: 2, // Thicker line for cumulative expenses,
+          Color: '#ffffff'
         }
       ]
     };
@@ -222,26 +229,41 @@ export class AnalysisComponent {
             labels: labels,
             title: {
               display: true,
-              text: 'Date'
+              text: 'Date',
+              color: '#ffffff'
+            },
+            ticks: {
+              color: '#ffffff' // Labels color (Y axis)
             }
           },
           y: {
             beginAtZero: true,
             title: {
               display: true,
-              text: 'Amount (' + this.userCurrencySymbol?.toString() + ')'
+              text: 'Amount (' + this.userCurrencySymbol?.toString() + ')',
+              color: '#ffffff'
+            },
+            ticks: {
+              color: '#ffffff' // Labels color (Y axis)
             }
           }
         },
         plugins: {
           legend: {
-            position: 'top' // Position the legend at the top
+            labels:{
+              color: '#ffffff',
+              font: {
+                size: 16 
+              }
+            },
+            position: 'top', // Position the legend at the top
+            color: '#ffffff'
           },
           tooltip: {
             callbacks: {
               label: (context: TooltipItem<'line'>) => {
                 const value = context.raw as number;
-                return `€${value.toFixed(2)}`;
+                return `${this.userCurrencySymbol?.toString()} ${value.toFixed(2)}`;
               }
             }
           }

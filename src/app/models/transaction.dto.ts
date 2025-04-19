@@ -1,5 +1,5 @@
 export interface TransactionDto {
-    id?: number;
+    id?: number | null;
     userId: number;
     amount: number;
     categoryId: number;

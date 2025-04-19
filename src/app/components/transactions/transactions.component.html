@@ -1,5 +1,5 @@
 <div class="flex flex-col items-center mt-5 mb-10">
-    <div class="grid justify-items-center bg-white/20 backdrop-blur-md w-11/12 md:w-4/5 p-6 md:p-8 rounded-xl shadow-md">
+    <div class="grid justify-items-center bg-white/75 backdrop-blur-md w-11/12 md:w-4/5 p-6 md:p-8 rounded-xl shadow-md">
       
       <!-- Header Section -->
       <div class="w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6">
@@ -74,7 +74,7 @@
                 <td class="text-left px-4 py-2">{{ transaction?.date | date: 'dd/MM/yyyy' }}</td>
                 <td class="text-left px-4 py-2 md:max-w-sm">{{ transaction?.description }}</td>
                 <td class="text-left px-4 py-2">
-                  <a (click)="deleteTransaction(transaction?.id)"
+                  <a (click)="deleteTransaction(transaction?.id ?? 0)"
                      class="text-red-600 hover:text-red-800 hover:underline cursor-pointer">
                     <i class="fas fa-trash-alt"></i>
                   </a>
@@ -107,7 +107,7 @@
             <p><span class="font-semibold">Date:</span> {{ transaction?.date | date: 'dd/MM/yyyy' }}</p>
             <p><span class="font-semibold">Description:</span> {{ transaction?.description }}</p>
             <p>
-                <a (click)="deleteTransaction(transaction?.id)"
+                <a (click)="deleteTransaction(transaction?.id ?? 0)"
                 class="text-red-600 hover:text-red-800 hover:underline cursor-pointer">
                 <i class="fas fa-trash-alt"></i> Delete
                 </a>

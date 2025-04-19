@@ -6,10 +6,10 @@
     <!-- authenticated -->
     <ng-template #loggedIn>
       <nav>
-        <div class="flex justify-between items-center w-11/12 md:w-4/5 mx-auto px-4 mt-10 border-b-2 border-gray-300">
+        <div class="pb-5 flex justify-between items-center w-11/12 md:w-4/5 mx-auto px-4 mt-5 md:mt-10 border-b-2 border-gray-300">
           <!-- Logo and other top content -->
-          <h1 class="text-xl md:text-2xl tracking-tight text-gray-950">{{title}} </h1>
-          <span class="text-sm pl-5 md:text-md md:pl-0" *ngIf="userName">Welcome {{userName}}!</span>
+          <h1 class="text-xl md:text-2xl tracking-tight text-white">{{title}} </h1>
+          <span class="text-sm pl-5 md:text-md md:pl-0 text-white " *ngIf="userName">Welcome {{userName}}!</span>
           <!-- Logout Button -->
           <a 
             href="javascript:void(0);" 
@@ -25,7 +25,7 @@
               <a 
                 routerLink="dashboard" 
                 routerLinkActive="bg-yellow-500"
-                class="px-4 py-2 shadow-md rounded-full bg-gray-800 text-white font-medium hover:bg-yellow-500 transition-all duration-300">
+                class="px-4 py-2 shadow-md rounded-full bg-sky-500 text-white font-medium hover:bg-yellow-500 transition-all duration-300">
                 <i class="fa-solid fa-house pr-2"></i>
                 Home
               </a>
@@ -34,7 +34,7 @@
               <a 
                 routerLink="transactions" 
                 routerLinkActive="bg-yellow-500"
-                class="px-4 py-2 shadow-md rounded-full bg-gray-800 text-white font-medium hover:bg-yellow-500 transition-all duration-300">
+                class="px-4 py-2 shadow-md rounded-full bg-sky-500 text-white font-medium hover:bg-yellow-500 transition-all duration-300">
                 <i class="fa-solid fa-list pr-2"></i>
                 All Transactions
               </a>
@@ -43,7 +43,7 @@
               <a 
                 routerLink="add" 
                 routerLinkActive="bg-yellow-500"
-                class="px-4 py-2 shadow-md rounded-full bg-gray-800 text-white font-medium hover:bg-yellow-500 transition-all duration-300">
+                class="px-4 py-2 shadow-md rounded-full bg-sky-500 text-white font-medium hover:bg-yellow-500 transition-all duration-300">
                 <i class="fa-solid fa-plus pr-2"></i>
                 Add Transaction
               </a>
@@ -52,7 +52,7 @@
               <a 
                 routerLink="analysis" 
                 routerLinkActive="bg-yellow-500"
-                class="px-4 py-2 shadow-md rounded-full bg-gray-800 text-white font-medium hover:bg-yellow-500 transition-all duration-300">
+                class="px-4 py-2 shadow-md rounded-full bg-sky-500 text-white font-medium hover:bg-yellow-500 transition-all duration-300">
                 <i class="fa-solid fa-chart-simple pr-2"></i>
                 Analysis
               </a>
