@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserDto } from '../../models/user.dto';
 import { LoginDto } from '../../models/login.dto';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,7 @@ export class RegisterComponent {
   isLoading: boolean = false;
   @Output() changeToLogin = new EventEmitter<void>();
   
-  constructor(private snackBar: MatSnackBar, private authService: AuthService, private router: Router) {}
+  constructor(private transactionService: TransactionService, private snackBar: MatSnackBar, private authService: AuthService, private router: Router) {}
 
   validatePassword(): boolean {
     const password = this.registerData.password;
@@ -98,6 +99,7 @@ export class RegisterComponent {
               if (value.token) {
                 const userId = value?.userDto?.id;
                 const userName = value?.userDto?.name;
+                const userCurrency = value?.userDto?.currency;
                 // On successful login, emit the login event
                 localStorage.setItem('token', value.token);
                 if (typeof userId === 'number' && !isNaN(userId)) {
@@ -106,6 +108,11 @@ export class RegisterComponent {
                 if (userName && typeof userName === 'string') {
                   localStorage.setItem('userName', userName );
                 }
+                if (userCurrency && typeof userCurrency === 'object') {
+                  localStorage.setItem('userCurrencySymbol', userCurrency.symbol );
+                  localStorage.setItem('userCurrencyName', userCurrency.name );
+                }
+                this.transactionService.clearTransactions(); // clear transactions
                 this.router.navigate(['/dashboard']);
               } else {  
                 alert('Invalid credentials');
