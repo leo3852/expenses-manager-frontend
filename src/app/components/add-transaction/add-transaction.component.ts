@@ -26,9 +26,9 @@ export class AddTransactionComponent implements OnInit {
   transactionForm = new FormGroup({
     id: new FormControl<number | null>(null),
     userId: new FormControl<number>(0, { nonNullable: true, validators: [Validators.required, this.amountGreaterThanZero] }),
-    amount: new FormControl<number>(0, { nonNullable: true, validators: [Validators.required] }),
+    amount: new FormControl<number>(0, { nonNullable: true, validators: [Validators.required, this.amountGreaterThanZero] }),
     categoryId: new FormControl<number>(1, { nonNullable: true, validators: [Validators.required] }),
-    type: new FormControl<'Income' | 'Expense'>('Income', { nonNullable: true, validators: [Validators.required] }),
+    type: new FormControl<'Income' | 'Expense'>('Expense', { nonNullable: true, validators: [Validators.required] }),
     description: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
     date: new FormControl<string>(this.formatDateToString(new Date()), { nonNullable: true, validators: [Validators.required] })
 
@@ -73,42 +73,33 @@ export class AddTransactionComponent implements OnInit {
     });
   }
 
-  // onSubmit(): void {
-  //   if (this.transactionForm.valid) {
-  //     const transaction: TransactionDto = this.transactionForm.value as TransactionDto;
-  //     this.transactionService.addTransaction(transaction).subscribe({
-  //       next: (addedTransaction: TransactionDto) => {
-  //         this.transactionForm.reset();
-  //       },
-  //       error: (err) => {
-  //         console.error('Error adding transaction', err);
-  //       }
-  //     });
-  //   } else {
-  //     console.error('Please fill in all required fields.');
-  //   }
-  // }
-
   onSubmit(): void {
     if (this.transactionForm.valid) {
       this.isLoading = true; // Show spinner
       const formValue = this.transactionForm.getRawValue();
-
+  
       const transaction: TransactionDto = {
         ...formValue,
         id: formValue.id ?? undefined,
-        date: new Date(formValue.date as string) // Convert string to Date
+        date: new Date(formValue.date as string)
       };
   
       this.transactionService.addTransaction(transaction).subscribe({
         next: (addedTransaction: TransactionDto) => {
-          this.isLoading = false; // hide spinner
+          this.isLoading = false;
           this.transactionForm.reset();
-          // Re-set default date after reset (optional)
-          this.transactionForm.patchValue({ date: this.formatDateToString(new Date()) });
+  
+          // Re-set necessary default values
+          const userId = localStorage.getItem('userId');
+          this.transactionForm.patchValue({
+            userId: userId ? parseInt(userId, 10) : 0,
+            type: 'Expense',
+            categoryId: this.categories.length > 0 ? this.categories[0].id : 1,
+            date: this.formatDateToString(new Date())
+          });
         },
         error: (err) => {
-          this.isLoading = false; // hide spinner
+          this.isLoading = false;
           console.error('Error adding transaction', err);
         }
       });
@@ -116,6 +107,7 @@ export class AddTransactionComponent implements OnInit {
       console.error('Please fill in all required fields.');
     }
   }
+  
   
 
   // Getter for accessing form controls in template (for error handling)

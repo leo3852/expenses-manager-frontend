@@ -16,17 +16,30 @@ export class AuthLayoutComponent implements OnInit {
   isLogin = true;
   isRegister = false;
   showButtns = true;
+  isCheckingLogin = true;
   constructor(private router: Router, private route: ActivatedRoute) {}
   
   
   
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const mode = params['mode'];
-      this.isLogin = (mode === 'login');
-      this.isRegister = (mode === 'register');
-      
-    });
+
+    this.isCheckingLogin = true;
+    // Check for token or userId in localStorage
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
+    if (token && userId) {
+      setTimeout(() => {
+        this.router.navigate(['/dashboard']);
+      }, 1000); // Show spinner for a second
+    } else {
+      this.route.params.subscribe(params => {
+        const mode = params['mode'];
+        this.isLogin = (mode === 'login');
+        this.isRegister = (mode === 'register');
+        this.isCheckingLogin = false;
+      });
+    }
   }
   
   onSwitchToLogin() {
