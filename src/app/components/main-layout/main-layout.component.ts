@@ -6,6 +6,7 @@ import { LoginComponent } from "../login/login.component";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { AuthLayoutComponent } from "../auth-layout/auth-layout.component";
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -27,7 +28,7 @@ export class MainLayoutComponent implements OnInit {
   isAuthenticated = false;
   title = 'FINANCES MANAGER'; 
   userName: string | null | undefined;
-  constructor(private router: Router) {}
+  constructor(private transactionService: TransactionService, private router: Router) {}
   
   ngOnInit(): void {
     this.checkAuthentication();
@@ -48,7 +49,8 @@ export class MainLayoutComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('token'); 
+    this.transactionService.clearTransactions(); // clear transactions
+    localStorage.clear();
     this.isAuthenticated = false;
     this.router.navigate(['/login']); // Redirect to the login page
   }
