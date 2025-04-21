@@ -51,7 +51,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let transaction of transactions" class="border-b border-gray-300 dark:border-gray-600 hover:bg-gray-50">
+            <tr *ngFor="let transaction of transactions" class="border-b border-gray-300 dark:border-gray-600 hover:bg-gray-950">
                 <td class="text-left px-4 py-2">{{ transaction?.amount | currency: userCurrencySymbol?.toString() + " "  }}</td>
                 <td class="text-left px-4 py-2">
                     <i [ngClass]="[
