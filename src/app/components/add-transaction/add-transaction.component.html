@@ -5,6 +5,23 @@
     
     <!-- Form starts here -->
     <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="flex flex-col m-10 w-full md:w-1/2">
+      <!-- Amount Field -->
+      <input 
+      class="mt-2 px-3 py-2 bg-neutral-700 text-white invalid:border-pink-500 p-3 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Amount"
+        type="number"
+        formControlName="amount" 
+        step="0.01"
+        required 
+      />
+      <p *ngIf="amountControl?.touched && amountControl?.errors?.['required']" class="text-red-500 text-sm mt-1">
+        Amount is required.
+      </p>
+      
+      <p *ngIf="amountControl?.touched && amountControl?.errors?.['notPositive']" class="text-red-500 text-sm mt-1">
+        Amount must be greater than 0.
+      </p>
+      
       <!-- Category Field -->
       <div>
         <select 
@@ -30,25 +47,17 @@
         </select>
       </div>
   
-      <!-- Amount Field -->
-      <input 
-      class="mt-2 px-3 py-2 bg-neutral-700 text-white invalid:border-pink-500 p-3 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Amount"
-        type="number"
-        formControlName="amount" 
-        step="0.01"
-        required 
-      />
-      <p *ngIf="amountControl?.touched && amountControl?.errors?.['required']" class="text-red-500 text-sm mt-1">
-        Amount is required.
-      </p>
-      
-      <p *ngIf="amountControl?.touched && amountControl?.errors?.['notPositive']" class="text-red-500 text-sm mt-1">
-        Amount must be greater than 0.
-      </p>
   
      
-  
+      <!-- Date Field -->
+      <input
+      class="w-full mt-2 px-3 py-2 bg-neutral-700 text-white invalid:border-pink-500 p-3 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      
+      type="date" formControlName="date" 
+      required 
+      />
+      
+          
       <!-- Description Field -->
       <input 
         class="mt-2 px-3 py-2 bg-neutral-700 text-white invalid:border-pink-500 p-3 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -58,18 +67,15 @@
         formControlName="description" 
       />
       
-       <!-- Date Field -->
-       <input
-       class="mt-2 px-3 py-2 bg-neutral-700 text-white invalid:border-pink-500 p-3 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-       type="date" formControlName="date" 
-       required 
-     />
+      <p *ngIf="formBroken" class="text-red-500 text-sm mt-2">
+        Please fill in all required fields.
+      </p>
 
       <!-- Submit Button -->
       <button 
+        *ngIf="!isLoading"
         type="submit" 
-        [disabled]="transactionForm.invalid" 
-        class="rounded-full bg-neutral-700 border-1 border-white mt-5 px-5 py-2 text-sm leading-5 font-semibold text-white hover:bg-pink-600 cursor-pointer"
+        class="rounded-full bg-neutral-700 border-1 border-white mt-5 px-5 py-2 text-sm leading-5 font-semibold text-white hover:bg-pink-600 cursor-pointer "
       >
         + Add Transaction
       </button>

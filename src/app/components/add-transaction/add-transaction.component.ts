@@ -19,6 +19,7 @@ import { NgFor, NgIf, CommonModule } from '@angular/common';
   styleUrls: ['./add-transaction.component.scss'],
 })
 export class AddTransactionComponent implements OnInit {
+  formBroken: boolean= false;
   isLoading:boolean = false; 
   categories: CategoryDto[] = []; 
   userCurrencySymbol: string | null= '';
@@ -29,7 +30,7 @@ export class AddTransactionComponent implements OnInit {
     amount: new FormControl<number>(0, { nonNullable: true, validators: [Validators.required, this.amountGreaterThanZero] }),
     categoryId: new FormControl<number>(1, { nonNullable: true, validators: [Validators.required] }),
     type: new FormControl<'Income' | 'Expense'>('Expense', { nonNullable: true, validators: [Validators.required] }),
-    description: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+    description: new FormControl<string>('', { nonNullable: true }),
     date: new FormControl<string>(this.formatDateToString(new Date()), { nonNullable: true, validators: [Validators.required] })
 
   });
@@ -41,7 +42,7 @@ export class AddTransactionComponent implements OnInit {
     private categoriesService: CategoriesService,
     private transactionService: TransactionService
   ) {}
-  
+
   amountGreaterThanZero(control: AbstractControl): ValidationErrors | null {
     return control.value > 0 ? null : { notPositive: true };
   }
@@ -54,6 +55,10 @@ export class AddTransactionComponent implements OnInit {
   
   get amountControl() {
     return this.transactionForm.get('amount');
+  }
+
+  get descriptionControl() {
+    return this.transactionForm.get('description');
   }
   
   ngOnInit(): void {
@@ -97,13 +102,18 @@ export class AddTransactionComponent implements OnInit {
             categoryId: this.categories.length > 0 ? this.categories[0].id : 1,
             date: this.formatDateToString(new Date())
           });
+          this.transactionForm.markAsPristine();
+          this.transactionForm.markAsUntouched();
+          this.formBroken = false;
         },
         error: (err) => {
+          this.formBroken = true;
           this.isLoading = false;
           console.error('Error adding transaction', err);
         }
       });
     } else {
+      this.formBroken = true;
       console.error('Please fill in all required fields.');
     }
   }
