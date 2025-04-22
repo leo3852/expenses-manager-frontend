@@ -70,7 +70,7 @@ export class AnalysisComponent {
     const prompt = `Based on the following expense breakdown, write a paragraph with a financial insight and recommendation:\n${expenseLines}`;
 
     const headers = new HttpHeaders({
-      Authorization: 'Bearer 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',
+      Authorization: 'Bearer ${environment.huggingfaceToken}',
       'Content-Type': 'application/json',
     });
 
