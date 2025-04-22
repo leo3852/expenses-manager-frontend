@@ -160,6 +160,12 @@ export class AnalysisComponent {
             position: 'bottom'
           },
           tooltip: {
+            titleFont: {
+              size: 16 
+            },
+            bodyFont: {
+              size: 16 
+            },      
             callbacks: {
               label: (context: TooltipItem<'pie'>) => {
                 const value = context.raw as number;
