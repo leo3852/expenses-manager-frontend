@@ -5,6 +5,7 @@ import { TransactionDto } from '../../models/transaction.dto';
 import { CategoriesService } from '../../services/categories.service';
 import { TransactionService } from '../../services/transaction.service';
 import { CommonModule, NgFor } from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 Chart.register(...registerables);
 
@@ -17,6 +18,8 @@ Chart.register(...registerables);
 export class AnalysisComponent {
   public config: any = {}
   categories: CategoryDto[] = []; // e.g., Rent, Food, etc.
+  summaryAI: string = '';
+
   transactions: TransactionDto[] = [];
   chart: Chart | undefined;
   timeBasedChart: Chart | undefined;
@@ -28,8 +31,8 @@ export class AnalysisComponent {
   userCurrencySymbol: string | null = " ";
   constructor(
     private transactionService: TransactionService,
-    private categoriesService: CategoriesService
-  ) {}  
+    private categoriesService: CategoriesService,
+    private http: HttpClient) {}  
 
   ngOnInit() {
     this.userCurrencySymbol = localStorage.getItem('userCurrencySymbol');
@@ -46,6 +49,7 @@ export class AnalysisComponent {
           this.updateChart(); // For the expenses chart
           this.getBiggestTransactions(); // For the biggest transactions
           this.updateTimeBasedChart(); // For the time-based income vs expenses chart
+          this.generateSummary(); // For the AI conclusion
         });
       },
       error: (err) => {
@@ -53,7 +57,53 @@ export class AnalysisComponent {
       }
     });
   }
-  
+
+  generateSummary() {
+    const expenseTotals = this.getExpensesByCategory();
+
+    let expenseLines = '';
+    for (const catId in expenseTotals) {
+      const name = this.categories[+catId] || `Category ${catId}`;
+      expenseLines += `- ${name}: $${expenseTotals[catId].toFixed(2)}\n`;
+    }
+
+    const prompt = `Based on the following expense breakdown, write a paragraph with a financial insight and recommendation:\n${expenseLines}`;
+
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer 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',
+      'Content-Type': 'application/json',
+    });
+
+    const body = {
+      inputs: prompt,
+    };
+
+    this.http
+      .post<any>(
+        'https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct',
+        body,
+        { headers }
+      )
+      .subscribe({
+        next: (res) => {
+          this.summaryAI = res?.[0]?.generated_text || 'No summary generated.';
+        },
+        error: (err) => {
+          console.error(err);
+          this.summaryAI = 'Error generating summary.';
+        },
+      });
+  }
+
+  getExpensesByCategory(): { [categoryId: number]: number } {
+    const expenses = this.transactions.filter((t) => t.type === 'Expense');
+    const totals: { [categoryId: number]: number } = {};
+    for (const tx of expenses) {
+      totals[tx.categoryId] = (totals[tx.categoryId] || 0) + tx.amount;
+    }
+    return totals;
+  }
+
 
   getCurrentMonthTransactions(transactions: TransactionDto[]): TransactionDto[] {
     const now = new Date();

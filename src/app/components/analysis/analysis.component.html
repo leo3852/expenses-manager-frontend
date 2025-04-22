@@ -2,15 +2,15 @@
     <h2 class="text-center text-2xl   ">Analysis for the current month</h2>
     <!-- <p class="text-center">Number of Transactions {{numberOfTransactions}}</p> -->
     
-    <div class=" w-full mx-auto mt-10 pb-10 pl-6 border-b-2 border-gray-300">
-        <h2 class="text-center md:text-left text-2xl  text-center">Number of Transactions</h2>
-        <p class="text-center md:text-left">Here we can see spending + icome</p>
-
-        <div class="flex justify-center items-center w-11/12 md:w-4/5 mx-auto mt-4">
-            <h3 class="text-3xl border-3 border-blue-500 rounded-full  p-3 md:p-6">{{numberOfTransactions}}</h3>
-        </div>
-    </div>
     <div>
+        <div class=" w-full mx-auto mt-10 pb-10 pl-6 border-b-2 border-gray-300">
+            <h2 class="text-center md:text-left text-2xl  text-center">Number of Transactions</h2>
+            <p class="text-center md:text-left">Here we can see spending + icome</p>
+    
+            <div class="flex justify-center items-center w-11/12 md:w-4/5 mx-auto mt-4">
+                <h3 class="text-3xl border-3 border-blue-500 rounded-full  p-3 md:p-6">{{numberOfTransactions}}</h3>
+            </div>
+        </div>
         <div class=" w-full mx-auto mt-10 pb-10 md:pl-6 border-b-2 border-gray-300">
             <h2 class="text-center md:text-left text-2xl   ">Expenses chart</h2>
             <p class="text-center md:text-left">Here we can see only expenses</p>
@@ -19,6 +19,12 @@
                     <canvas id="MyChart" height="450" width="600">{{chart}}</canvas>
                 </div>
             </div>
+        </div>
+        <div *ngIf="summaryAI" class=" w-full mx-auto mt-10 pb-10 pl-6 border-b-2 border-gray-300">
+            <h2 class="text-center md:text-left text-2xl  text-center">AI Conclusion</h2>
+            <p class="text-center md:text-left text-sm text-gray-100 mt-1">Text generated with ai service </p>
+            <p class="text-center md:text-left mt-5">{{summaryAI}}</p>
+    
         </div>
         
         <!-- Time-Based Analysis Chart -->
