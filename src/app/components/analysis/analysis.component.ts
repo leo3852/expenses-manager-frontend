@@ -49,7 +49,7 @@ export class AnalysisComponent {
           this.updateChart(); // For the expenses chart
           this.getBiggestTransactions(); // For the biggest transactions
           this.updateTimeBasedChart(); // For the time-based income vs expenses chart
-          this.generateSummary(); // For the AI conclusion
+          //this.generateSummary(); // For the AI conclusion
         });
       },
       error: (err) => {
@@ -63,34 +63,40 @@ export class AnalysisComponent {
 
     let expenseLines = '';
     for (const catId in expenseTotals) {
-      const name = this.categories[+catId] || `Category ${catId}`;
+      const name = this.categories[(+catId - 1)].name || `Category ${catId}`;
       expenseLines += `- ${name}: $${expenseTotals[catId].toFixed(2)}\n`;
     }
 
-    const prompt = `Based on the following expense breakdown, write a paragraph with a financial insight and recommendation:\n${expenseLines}`;
-
+    const prompt = `Based on the following expense breakdown, write a paragraph with a financial insight and recommendation:\n${expenseLines} With a maximum of 150 words.`;
+    const startPhrase = "150 words.";
+      
     const headers = new HttpHeaders({
-      Authorization: 'Bearer ${environment.huggingfaceToken}',
+      Authorization: 'Bearer ',
       'Content-Type': 'application/json',
     });
-
+    
     const body = {
       inputs: prompt,
     };
-
+    
     this.http
-      .post<any>(
-        'https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct',
-        body,
-        { headers }
-      )
-      .subscribe({
-        next: (res) => {
-          this.summaryAI = res?.[0]?.generated_text || 'No summary generated.';
+    .post<any>(
+      'https://api-inference.huggingface.co/models/distilbert/distilbert-base-uncased',
+      body,
+      { headers }
+    )
+    .subscribe({
+      next: (res) => {
+        this.summaryAI = res?.[0]?.generated_text || 'No summary generated.';
+        const startIndex = this.summaryAI.indexOf(startPhrase);
+        if (startIndex !== -1) {
+          this.summaryAI = this.summaryAI.substring(startIndex+ startPhrase.length).trim();
+        }
+        
         },
         error: (err) => {
           console.error(err);
-          this.summaryAI = 'Error generating summary.';
+          this.summaryAI = '';
         },
       });
   }
@@ -100,7 +106,7 @@ export class AnalysisComponent {
     const totals: { [categoryId: number]: number } = {};
     for (const tx of expenses) {
       totals[tx.categoryId] = (totals[tx.categoryId] || 0) + tx.amount;
-    }
+    }    
     return totals;
   }
 
