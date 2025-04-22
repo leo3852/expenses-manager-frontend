@@ -1039,7 +1039,8 @@
     }
   }
 }
-html {
+.bgbody {
+  background: rgb(6, 10, 33);
   background: linear-gradient(90deg, rgb(6, 10, 33) 0%, rgb(48, 18, 46) 50%, rgb(6, 10, 33) 100%);
 }
 @property --tw-space-y-reverse {
