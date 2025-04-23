@@ -26,16 +26,16 @@
             </div>
         </div>
         <!-- Balance  -->
-        <div class="bg-white flex items-center shadow-md rounded-full pl-5 mr-16 md:mr-0 md:p-4 md:pl-8">
+        <div class="bg-white flex items-center shadow-md rounded-full h-15 md:h-auto pl-5 mr-16 md:mr-0 md:p-4 md:pl-8">
             <i class="far fa-money-bill-alt text-gray-600 text-2xl mr-4"></i> 
             <div class="text-left m-2">
-                <h3 class="font-medium text-gray-600 mb-2">Balance</h3>
+                <h3 class="font-medium text-gray-600">Balance</h3>
                 <p class="text-xl md:text-2xl font-bold text-gray-800">{{userCurrencySymbol?.toString() + " " + ( userCurrencySymbol == 'Rp' ||  userCurrencySymbol == '$U' ? (incomeTotal - spendingTotal).toFixed(0) : (incomeTotal - spendingTotal).toFixed(2)) }}</p>
             </div>
         </div>
         <!-- NEW TRAN  -->
         <div class="flex flex-row-reverse items-center h-20 md:h-auto">
-            <div class="bg-sky-500 absolute shadow-md rounded-full p-6 px-7 cursor-pointer" routerLinkActive="bg-yellow-500" routerLink="add">
+            <div class="border-2 border-white absolute shadow-md rounded-full p-6 px-7 cursor-pointer" routerLinkActive="bg-yellow-500" routerLink="add">
                 <i class="text-3xl fa-solid fa-plus text-white"></i>
             </div>
         </div>
