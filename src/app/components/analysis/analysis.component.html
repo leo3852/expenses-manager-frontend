@@ -1,19 +1,20 @@
 <div class="w-11/12 md:w-4/5 mx-auto px-4 mt-10 border-b-2 border-gray-300 text-white">
-    <h2 class="text-center text-2xl   ">Analysis for the current month</h2>
+    <h2 class="text-center text-2xl text-pink-600  ">Analysis for the current month</h2>
+    <p class="text-sm text-white text-center mt-2"><i>"Small steps in the right direction are better than big steps nowhere."</i></p>
     <!-- <p class="text-center">Number of Transactions {{numberOfTransactions}}</p> -->
     
     <div>
         <div class=" w-full mx-auto mt-10 pb-10 pl-6 border-b-2 border-gray-300">
-            <h2 class="text-center md:text-left text-2xl  text-center">Number of Transactions</h2>
-            <p class="text-center md:text-left">Here we can see spending + icome</p>
+            <h2 class="text-center md:text-left text-2xl text-pink-600 text-center">Number of Transactions</h2>
+            <p class="text-center text-sm md:text-left">Here we can see number of spending + icome</p>
     
             <div class="flex justify-center items-center w-11/12 md:w-4/5 mx-auto mt-4">
-                <h3 class="text-3xl border-3 border-blue-500 rounded-full  p-3 md:p-6">{{numberOfTransactions}}</h3>
+                <h3 class="text-3xl border-3 border-blue-500 rounded-full text-yellow-500 p-3 bg-sky-500/50 md:p-6">{{numberOfTransactions}}</h3>
             </div>
         </div>
         <div class=" w-full mx-auto mt-10 pb-10 md:pl-6 border-b-2 border-gray-300">
-            <h2 class="text-center md:text-left text-2xl   ">Expenses chart</h2>
-            <p class="text-center md:text-left">Here we can see only expenses</p>
+            <h2 class="text-center md:text-left text-2xl  text-pink-600 ">Expenses chart</h2>
+            <p class="text-center text-sm md:text-left">Here we can see only expenses</p>
             <div class="flex justify-center items-center w-11/12 md:w-4/5 mx-auto mt-10">
                 <div class="w-full md:w-2/3 md:chart-container">
                     <canvas id="MyChart" height="450" width="600">{{chart}}</canvas>
@@ -29,7 +30,7 @@
         
         <!-- Time-Based Analysis Chart -->
         <div class="w-full mx-auto mt-10 pb-10 md:pl-6 border-b-2 border-gray-300">
-            <h2 class="text-center md:text-left text-2xl  ">Time-Based Analysis</h2>
+            <h2 class="text-center md:text-left text-2xl text-pink-600 ">Time-Based Analysis</h2>
             <div class="flex justify-center items-center w-11/12 md:w-4/5 mx-auto mt-10">
                 <div class="w-full md:w-2/3 md:chart-container mr-10">
                     <canvas id="timeBasedChart" height="450" width="600"></canvas>
@@ -39,7 +40,7 @@
         
         <!-- Table for larger screens -->
         <div class="w-full mx-auto mt-10 pb-10 pl-6 border-b-2 border-gray-300 hidden sm:block">
-            <h2 class="text-center md:text-left  text-2xl  mb-6">Top 5 Biggest Transactions</h2>
+            <h2 class="text-center md:text-left  text-2xl text-pink-600 mb-6">Top 5 Biggest Transactions</h2>
             <table class="table-auto w-full text-left border-collapse mt-8">
                 <thead>
                     <tr class="w-full text-sm   uppercase tracking-wider">
@@ -62,7 +63,7 @@
         
         <!-- List for smaller screens -->
         <div class="w-full mx-auto mt-10 pb-10 pl-6 border-b-2 border-gray-300 sm:hidden">
-            <h2 class="text-center md:text-left text-2xl   mb-6">Top 5 Biggest Transactions</h2>
+            <h2 class="text-center md:text-left text-2xl text-pink-600  mb-6">Top 5 Biggest Transactions</h2>
             <div *ngFor="let transaction of biggestTransactions" class="mb-4 p-4 border rounded-lg shadow-md hover:bg-gray-500">
                 <div class="flex justify-between">
                     <p class="font-semibold  ">{{ transaction.date | date: 'MMM d, y' }}</p>
