@@ -19,6 +19,7 @@
     --color-green-200: oklch(92.5% 0.084 155.995);
     --color-green-500: oklch(72.3% 0.219 149.579);
     --color-green-600: oklch(62.7% 0.194 149.214);
+    --color-sky-200: oklch(90.1% 0.058 230.902);
     --color-sky-500: oklch(68.5% 0.169 237.323);
     --color-sky-700: oklch(50% 0.134 242.749);
     --color-blue-200: oklch(88.2% 0.059 254.128);
@@ -38,6 +39,8 @@
     --color-gray-700: oklch(37.3% 0.034 259.733);
     --color-gray-800: oklch(27.8% 0.033 256.848);
     --color-gray-950: oklch(13% 0.028 261.692);
+    --color-neutral-300: oklch(87% 0 0);
+    --color-neutral-500: oklch(55.6% 0 0);
     --color-neutral-700: oklch(37.1% 0 0);
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -56,6 +59,7 @@
     --text-4xl--line-height: calc(2.5 / 2.25);
     --text-8xl: 6rem;
     --text-8xl--line-height: 1;
+    --font-weight-light: 300;
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
@@ -496,6 +500,12 @@
   .border-white {
     border-color: var(--color-white);
   }
+  .bg-blue-200\/50 {
+    background-color: color-mix(in srgb, oklch(88.2% 0.059 254.128) 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-blue-200) 50%, transparent);
+    }
+  }
   .bg-lime-50 {
     background-color: var(--color-lime-50);
   }
@@ -510,6 +520,12 @@
   }
   .bg-red-300 {
     background-color: var(--color-red-300);
+  }
+  .bg-sky-200\/50 {
+    background-color: color-mix(in srgb, oklch(90.1% 0.058 230.902) 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-sky-200) 50%, transparent);
+    }
   }
   .bg-sky-500 {
     background-color: var(--color-sky-500);
@@ -630,6 +646,10 @@
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }
+  .font-light {
+    --tw-font-weight: var(--font-weight-light);
+    font-weight: var(--font-weight-light);
+  }
   .font-medium {
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
@@ -679,6 +699,12 @@
   .text-green-600 {
     color: var(--color-green-600);
   }
+  .text-neutral-300 {
+    color: var(--color-neutral-300);
+  }
+  .text-neutral-500 {
+    color: var(--color-neutral-500);
+  }
   .text-pink-600 {
     color: var(--color-pink-600);
   }
@@ -693,6 +719,18 @@
   }
   .text-white {
     color: var(--color-white);
+  }
+  .text-white\/50 {
+    color: color-mix(in srgb, #fff 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--color-white) 50%, transparent);
+    }
+  }
+  .text-white\/75 {
+    color: color-mix(in srgb, #fff 75%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--color-white) 75%, transparent);
+    }
   }
   .text-yellow-500 {
     color: var(--color-yellow-500);
