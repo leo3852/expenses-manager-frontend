@@ -70,15 +70,16 @@ export class AnalysisComponent {
 
   generateSummary() {
     const expenseTotals = this.getExpensesByCategory();
-    
+    const incomeTotal = this.getTotalIncome();
+
     let expenseLines = '';
     for (const catId in expenseTotals) {
       const name = this.categories[(+catId - 1)]?.name || `Category ${catId}`;
       expenseLines += `- Total spending of ${name}: ${this.userCurrencySymbol?.toString()} ${expenseTotals[catId].toFixed(2)}. `;
     }
   
-    const prompt = `Based on the following expense breakdown, write a paragraph of maximum 150 words with two sections 1- financial insight and 2- recommendation. The text expenses until now are these: ${expenseLines}`;
-  
+    const prompt = `Based on the following expense breakdown, write a paragraph of maximum 150 words with two sections 1- financial insight and 2- recommendation. The text expenses until now are these: ${expenseLines}. And total income so far is:${this.userCurrencySymbol?.toString()} ${incomeTotal}`;    
+    
     const headers = new HttpHeaders({
       Authorization: `Bearer ${environment.cohereToken}`,
       'Content-Type': 'application/json',
@@ -118,6 +119,12 @@ export class AnalysisComponent {
     }    
     return totals;
   }
+
+  getTotalIncome(): number {
+    return this.transactions
+      .filter((t) => t.type === 'Income')
+      .reduce((sum, t) => sum + t.amount, 0);
+  }  
 
 
   getCurrentMonthTransactions(transactions: TransactionDto[]): TransactionDto[] {
