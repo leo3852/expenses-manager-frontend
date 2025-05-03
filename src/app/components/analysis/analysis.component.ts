@@ -6,6 +6,7 @@ import { CategoriesService } from '../../services/categories.service';
 import { TransactionService } from '../../services/transaction.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../../src/environments/environment';
 
 Chart.register(...registerables);
 
@@ -19,6 +20,7 @@ export class AnalysisComponent {
   public config: any = {}
   categories: CategoryDto[] = []; // e.g., Rent, Food, etc.
   summaryAI: string = '';
+  showSummary = false;
 
   transactions: TransactionDto[] = [];
   chart: Chart | undefined;
@@ -29,13 +31,14 @@ export class AnalysisComponent {
   numberOfTransactions: number = 0;
   backgroundColors = ['#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6', '#EC4899', '#14B8A6', '#F97316', '#6366F1', '#6B7280'];
   userCurrencySymbol: string | null = " ";
+  isLoadingAiSummary:boolean = false; 
   constructor(
     private transactionService: TransactionService,
     private categoriesService: CategoriesService,
     private http: HttpClient) {}  
 
   ngOnInit() {
-    this.userCurrencySymbol = localStorage.getItem('userCurrencySymbol');
+    this.userCurrencySymbol = localStorage.getItem('userCurrencySymbol') ?? "$";
     this.categoriesService.getCategories().subscribe({
       next: (categories: CategoryDto[]) => {
         this.categories = categories;
@@ -49,7 +52,6 @@ export class AnalysisComponent {
           this.updateChart(); // For the expenses chart
           this.getBiggestTransactions(); // For the biggest transactions
           this.updateTimeBasedChart(); // For the time-based income vs expenses chart
-          //this.generateSummary(); // For the AI conclusion
         });
       },
       error: (err) => {
@@ -58,48 +60,55 @@ export class AnalysisComponent {
     });
   }
 
+  toggleSummary() {
+    this.showSummary = !this.showSummary;
+    if (this.showSummary && !this.summaryAI) {
+      this.isLoadingAiSummary = true; // Show spinner
+      this.generateSummary(); // only call if it hasn't been generated yet
+    }
+  }
+
   generateSummary() {
     const expenseTotals = this.getExpensesByCategory();
-
+    
     let expenseLines = '';
     for (const catId in expenseTotals) {
-      const name = this.categories[(+catId - 1)].name || `Category ${catId}`;
-      expenseLines += `- ${name}: $${expenseTotals[catId].toFixed(2)}\n`;
+      const name = this.categories[(+catId - 1)]?.name || `Category ${catId}`;
+      expenseLines += `- Total spending of ${name}: ${this.userCurrencySymbol?.toString()} ${expenseTotals[catId].toFixed(2)}. `;
     }
-
-    const prompt = `Based on the following expense breakdown, write a paragraph with a financial insight and recommendation:\n${expenseLines} With a maximum of 150 words.`;
-    const startPhrase = "150 words.";
-      
+  
+    const prompt = `Based on the following expense breakdown, write a paragraph of maximum 150 words with two sections 1- financial insight and 2- recommendation. The text expenses until now are these: ${expenseLines}`;
+  
     const headers = new HttpHeaders({
-      Authorization: 'Bearer ',
+      Authorization: `Bearer ${environment.cohereToken}`,
       'Content-Type': 'application/json',
     });
-    
+  
     const body = {
-      inputs: prompt,
-    };
+      stream: false,
+      model: 'command-a-03-2025',
+      messages: [
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ],
+    };    
     
-    this.http
-    .post<any>(
-      'https://api-inference.huggingface.co/models/distilbert/distilbert-base-uncased',
-      body,
-      { headers }
-    )
-    .subscribe({
+    this.http.post<any>('https://api.cohere.com/v2/chat', body, { headers }).subscribe({
       next: (res) => {
-        this.summaryAI = res?.[0]?.generated_text || 'No summary generated.';
-        const startIndex = this.summaryAI.indexOf(startPhrase);
-        if (startIndex !== -1) {
-          this.summaryAI = this.summaryAI.substring(startIndex+ startPhrase.length).trim();
-        }
-        
-        },
-        error: (err) => {
-          console.error(err);
-          this.summaryAI = '';
-        },
-      });
+        const textResponse = res?.message?.content?.[0]?.text;
+        this.summaryAI = textResponse || '';
+        this.isLoadingAiSummary = false; 
+      },
+      error: (err) => {
+        console.error('Cohere API error:', err);
+        this.summaryAI = '';
+        this.isLoadingAiSummary = false; 
+      },
+    });
   }
+  
 
   getExpensesByCategory(): { [categoryId: number]: number } {
     const expenses = this.transactions.filter((t) => t.type === 'Expense');
