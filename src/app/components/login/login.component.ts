@@ -58,6 +58,7 @@ export class LoginComponent {
           } else {  
             alert('Invalid credentials');
             this.loginValidOrFirst = false;
+            this.isLoading = false; // Hide spinner
           }
           
         },

@@ -8,8 +8,10 @@
       <nav>
         <div class="pb-5 flex justify-between items-center w-11/12 md:w-4/5 mx-auto px-4 mt-5 md:mt-10 border-b-2 border-gray-300">
           <!-- Logo and other top content -->
-          <h1 class="text-xl md:text-2xl tracking-tight text-white">{{title}} </h1>
-          <span class="text-sm pl-5 md:text-md md:pl-0 text-white " *ngIf="userName">Welcome {{userName}}!</span>
+           <div class="flex items-end">
+             <h1 class="text-xl md:text-2xl tracking-tight ">{{title}} </h1>
+             <span class="text-sm pl-5 md:text-md" *ngIf="userName">Welcome {{userName}}!</span>
+           </div>
           <!-- Logout Button -->
           <a 
             href="javascript:void(0);" 
@@ -21,29 +23,29 @@
         
         <div class="w-full p-4 pb-6 flex md:items-center md:justify-center w-11/12 md:w-4/5 mx-auto px-4 border-b-2 border-gray-300">
           <ul class="md:flex space-x-4">
-            <li class="mt-4">
+            <li class="mt-4 mb-5">
               <a 
                 routerLink="dashboard" 
-                routerLinkActive="bg-yellow-600"
-                class="px-4 pr-22 py-2 shadow-md rounded-full border-2 border-white text-white font-medium hover:bg-yellow-500 transition-all duration-300">
+                routerLinkActive="bg-yellow-500 border-yellow-500 text-white"
+                class="px-4 pr-22 py-2 shadow-md rounded-full border-2 font-medium hover:bg-yellow-500 hover:border-yellow-500 transition-all duration-300">
                 <i class="fa-solid fa-house pr-2"></i>
                 Home
               </a>
             </li>
-            <li  class="mt-4">
+            <li  class="mt-4 mb-5">
               <a 
                 routerLink="transactions" 
-                routerLinkActive="bg-yellow-600"
-                class="px-4 py-2 shadow-md rounded-full border-2 border-white text-white font-medium hover:bg-yellow-500 transition-all duration-300">
+                routerLinkActive="bg-yellow-500 border-yellow-500 text-white"
+                class="px-4 py-2 shadow-md rounded-full border-2  font-medium hover:bg-yellow-500 hover:border-yellow-500 transition-all duration-300">
                 <i class="fa-solid fa-list pr-2"></i>
                 All Transactions
               </a>
             </li>
-            <li class="mt-4">
+            <li class="mt-4 mb-5">
               <a 
                 routerLink="add" 
-                routerLinkActive="bg-yellow-600"
-                class="px-4 py-2 shadow-md rounded-full border-2 border-white text-white font-medium hover:bg-yellow-500 transition-all duration-300">
+                routerLinkActive="bg-yellow-500 border-yellow-500 text-white"
+                class="px-4 py-2 shadow-md rounded-full border-2 font-medium hover:bg-yellow-500  hover:border-yellow-500 transition-all duration-300">
                 <i class="fa-solid fa-plus pr-2"></i>
                 Add Transaction
               </a>
@@ -51,8 +53,8 @@
             <li class="mt-4">
               <a 
                 routerLink="analysis" 
-                routerLinkActive="bg-yellow-600 border-blue-500"
-                class="px-4 pr-18 py-2 shadow-md rounded-full border-2 border-white text-white font-medium hover:bg-yellow-500 transition-all duration-300">
+                routerLinkActive="bg-yellow-500 border-yellow-500 text-white"
+                class="px-4 pr-18 py-2 shadow-md rounded-full border-2  font-medium hover:bg-yellow-500 hover:border-yellow-500 transition-all duration-300">
                 <i class="fa-solid fa-chart-simple pr-2"></i>
                 Analysis
               </a>

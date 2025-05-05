@@ -104,7 +104,7 @@ export class AnalysisComponent {
       },
       error: (err) => {
         console.error('Cohere API error:', err);
-        this.summaryAI = '';
+        this.summaryAI = 'API not available..';
         this.isLoadingAiSummary = false; 
       },
     });
@@ -168,7 +168,7 @@ export class AnalysisComponent {
         plugins: {
           legend: {
             labels:{
-              color: '#ffffff',
+              // color: '#000',
               font: {
                 size: 16 
               }
@@ -308,10 +308,10 @@ export class AnalysisComponent {
             title: {
               display: true,
               text: 'Date',
-              color: '#ffffff'
+              // color: '#ffffff'
             },
             ticks: {
-              color: '#ffffff' // Labels color (Y axis)
+              // color: '#ffffff' // Labels color (Y axis)
             }
           },
           y: {
@@ -319,23 +319,23 @@ export class AnalysisComponent {
             title: {
               display: true,
               text: 'Amount (' + this.userCurrencySymbol?.toString() + ')',
-              color: '#ffffff'
+              // color: '#ffffff'
             },
             ticks: {
-              color: '#ffffff' // Labels color (Y axis)
+              // color: '#ffffff' // Labels color (Y axis)
             }
           }
         },
         plugins: {
           legend: {
             labels:{
-              color: '#ffffff',
+              // color: '#ffffff',
               font: {
                 size: 16 
               }
             },
             position: 'top', // Position the legend at the top
-            color: '#ffffff'
+            // color: '#ffffff'
           },
           tooltip: {
             callbacks: {

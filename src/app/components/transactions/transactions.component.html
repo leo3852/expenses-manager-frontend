@@ -3,15 +3,15 @@
       
       <!-- Header Section -->
       <div class="w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6">
-        <h2 class="text-2xl font-semibold text-white">Transactions</h2>
+        <h2 class="text-2xl">Transactions</h2>
         
         <!-- Filter Dropdown -->
         <div class="md:flex items-center self-end md:self-auto gap-2 w-1/2 w-full md:w-auto">
-          <label class="text-sm font-medium text-white ">Filters:</label>
+          <label class="text-sm font-medium  ">Filters:</label>
           <select
             [(ngModel)]="selectedMonth"
             (change)="filterByMonth()"
-            class="mt-1 md:mt-0 bg-white dark:bg-gray-700 text-white border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring focus:border-blue-400 w-full md:w-auto"
+            class="mt-1 md:mt-0 bg-white border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring focus:border-blue-400 w-full md:w-auto"
           >
             <option value="">All months</option>
             <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
@@ -19,7 +19,7 @@
           <select
             [(ngModel)]="selectedType"
             (change)="filterByType()"
-            class="mt-1 md:mt-0 bg-white dark:bg-gray-700 text-white border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring focus:border-blue-400 w-full md:w-auto"
+            class="mt-1 md:mt-0 bg-white border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring focus:border-blue-400 w-full md:w-auto"
           >
             <option value="">All types</option>
             <option *ngFor="let type of types" [value]="type.name">{{ type.name }}</option>
@@ -27,7 +27,7 @@
           <select
             [(ngModel)]="selectedCategory"
             (change)="filterByCategory()"
-            class="mt-1 md:mt-0 bg-white dark:bg-gray-700 text-white border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring focus:border-blue-400 w-full md:w-auto"
+            class="mt-1 md:mt-0 bg-white  border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring focus:border-blue-400 w-full md:w-auto"
           >
             <option value="">All Categories</option>
             <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
@@ -36,11 +36,11 @@
       </div>
   
       <!-- No Transactions Message -->
-      <p *ngIf="!transactions.length" class="text-center text-white ">No transactions this month...</p>
+      <p *ngIf="!transactions.length" class="text-center  ">No transactions this month...</p>
   
       <!-- Table (Desktop) -->
       <div *ngIf="transactions.length"  class="overflow-x-auto w-full hidden md:block">
-        <table class="w-full table-auto text-sm text-white">
+        <table class="w-full table-auto text-sm ">
           <thead>
             <tr class="border-b border-gray-400 ">
               <th class="px-4 py-2 text-left">Amount</th>
@@ -51,7 +51,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let transaction of transactions" class="border-b border-gray-300 dark:border-gray-600 hover:bg-gray-950">
+            <tr *ngFor="let transaction of transactions" class="border-b border-gray-300 dark:border-gray-600 hover:bg-gray-200">
                 <td class="text-left px-4 py-2">{{ transaction?.amount | currency: userCurrencySymbol?.toString() + " "  }}</td>
                 <td class="text-left px-4 py-2">
                     <i [ngClass]="[

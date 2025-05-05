@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center mt-5 overflow-x-auto w-full">
   <div class="grid justify-items-center  w-4/5 md:p-8 pt-5 rounded-md shadow-md">
     <div class="w-full flex justify-between pt-5 pb-8">
-      <p class="text-xl pl-5 md:pl-0 text-white">
+      <p class="text-xl pl-5 md:pl-0 ">
         Recent Added Transactions
       </p>
       
@@ -10,8 +10,8 @@
     </div>
     <!-- DESKTOP -->
     <!-- No Transactions Message -->
-    <p *ngIf="!transactions.length" class="text-center text-white ">No transactions yet...</p>
-    <table *ngIf="transactions.length" class="w-full text-white table-auto m-5 hidden md:table">
+    <p *ngIf="!transactions.length" class="text-center  ">No transactions yet...</p>
+    <table *ngIf="transactions.length" class="w-full  table-auto m-5 hidden md:table">
       <thead>
         <tr class="border-b">
           <th class="px-4 py-2 text-left">Amount</th>
