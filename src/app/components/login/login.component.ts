@@ -54,7 +54,9 @@ export class LoginComponent {
             this.loginValidOrFirst = true;
             //this.onLogin.emit(this.loginValidOrFirst); // Pass true when login is successful
             this.transactionService.clearTransactions(); // clear transactions
-            this.router.navigate(['/dashboard']);
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/dashboard']);
+            });
           } else {  
             alert('Invalid credentials');
             this.loginValidOrFirst = false;

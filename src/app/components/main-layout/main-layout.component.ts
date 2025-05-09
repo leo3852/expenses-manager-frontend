@@ -31,13 +31,19 @@ export class MainLayoutComponent implements OnInit {
   constructor(private transactionService: TransactionService, private router: Router) {}
   
   ngOnInit(): void {
-    this.checkAuthentication();
-  }
-  
-  // Check if the user is authenticated
-  checkAuthentication() {
-    this.isAuthenticated = !!localStorage.getItem('token');
-    this.userName = localStorage.getItem('userName');
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+      // Not authenticated, redirect to login
+      this.router.navigate(['/auth/login']);
+    } else {
+      // Authenticated, redirect to dashboard only if already not there
+      if (this.router.url === '/' || this.router.url === '/auth/login') {
+        this.router.navigate(['/dashboard']);
+      }
+      this.isAuthenticated = true;
+      this.userName = localStorage.getItem('userName');
+    }
   }
 
   // Handle login event from login component
