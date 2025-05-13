@@ -44,7 +44,7 @@ export class AddTransactionComponent implements OnInit {
   ) {}
 
   amountGreaterThanZero(control: AbstractControl): ValidationErrors | null {
-    return control.value > 0 ? null : { notPositive: true };
+    return control.value > 0 && control.value < 50000 ? null : { notPositive: true }; // control > 0 and < 50000
   }
 
 
